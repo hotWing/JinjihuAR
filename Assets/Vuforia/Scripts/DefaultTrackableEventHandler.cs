@@ -11,9 +11,13 @@ namespace Vuforia
     /// <summary>
     /// A custom handler that implements the ITrackableEventHandler interface.
     /// </summary>
+    
     public class DefaultTrackableEventHandler : MonoBehaviour,
                                                 ITrackableEventHandler
     {
+        public GameObject overlayUIObj;
+
+
         #region PRIVATE_MEMBER_VARIABLES
  
         private TrackableBehaviour mTrackableBehaviour;
@@ -26,6 +30,7 @@ namespace Vuforia
     
         void Start()
         {
+            overlayUIObj.SetActive(false);
             mTrackableBehaviour = GetComponent<TrackableBehaviour>();
             if (mTrackableBehaviour)
             {
@@ -83,6 +88,9 @@ namespace Vuforia
                 component.enabled = true;
             }
 
+            overlayUIObj.SetActive(true);
+
+
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
         }
 
@@ -103,7 +111,7 @@ namespace Vuforia
             {
                 component.enabled = false;
             }
-
+            overlayUIObj.SetActive(false);
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
         }
 
