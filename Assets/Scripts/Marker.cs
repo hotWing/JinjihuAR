@@ -1,29 +1,31 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 
 public class Marker : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	void OnEnable () {
+        StartCoroutine(expandImg());
 	}
-	
-	// Update is called once per frame
+
+
 	void Update () {
-        //float angleX = Vector3.Angle(Camera.main.transform.forward, Vector3.down);
-       //float angleY = Vector3.Angle(Camera.main.transform.forward, Vector3.forward);
-        //text.text = (Camera.main.transform.rotation.eulerAngles.y).ToString();
-        //if(angleX <= 30)
-        //{
-        //    //Vector3 vector = Quaternion.Euler(0, -45, 0) * vector;
-        //    transform.eulerAngles = new Vector3(50, 0, 0);
-        //}
-           
-        //else
-        //    transform.eulerAngles = new Vector3(50, 0, 0);
-
-        transform.Rotate(0, 2, 0);
-
+        transform.Rotate(0, 0, 2);
     }
 
-}
+    IEnumerator expandImg()
+    {
+        // 展开图片
+        float start = 700;
+        float end = 0;
+        float timeCost = 5f;
+        float startTime = Time.time;
+        float t = 0;
+        while (t < 1)
+        {
+            t = (Time.time - startTime) / timeCost;
+            transform.position = new Vector3(transform.position.x, Mathf.Lerp(start, end, t), transform.position.z);
+            yield return null;
+        }
+    }
+    }

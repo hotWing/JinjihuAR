@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c24811bb2300e914990e8f6312c43b00
-timeCreated: 1493973056
+guid: ce299b3db6c7114489914545e9adb92b
+timeCreated: 1494216583
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Line003
+    4300000: Rectangle068
   materials:
     importMaterials: 1
     materialName: 0
