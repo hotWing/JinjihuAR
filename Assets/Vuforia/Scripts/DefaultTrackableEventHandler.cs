@@ -15,8 +15,6 @@ namespace Vuforia
     public class DefaultTrackableEventHandler : MonoBehaviour,
                                                 ITrackableEventHandler
     {
-        public GameObject overlayUIObj;
-
 
         #region PRIVATE_MEMBER_VARIABLES
  
@@ -30,7 +28,6 @@ namespace Vuforia
     
         void Start()
         {
-            overlayUIObj.SetActive(false);
             mTrackableBehaviour = GetComponent<TrackableBehaviour>();
             if (mTrackableBehaviour)
             {
@@ -87,9 +84,8 @@ namespace Vuforia
             {
                 component.enabled = true;
             }
-
-            overlayUIObj.SetActive(true);
-
+            AppManager.instance.inTrack = true;
+            AppManager.instance.titleShow();
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
         }
@@ -111,7 +107,8 @@ namespace Vuforia
             {
                 component.enabled = false;
             }
-            overlayUIObj.SetActive(false);
+            AppManager.instance.inTrack = false;
+            AppManager.instance.hideOverlays();
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
         }
 

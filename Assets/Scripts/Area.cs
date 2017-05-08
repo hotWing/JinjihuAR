@@ -12,21 +12,15 @@ public class Area : MonoBehaviour {
     public float defaultImgWidth = 152;
     public float defaultTextWidth = 148;
 
-    void OnEnable()
+    void Start()
     {
         btn = GetComponent<Button>();
         btn.onClick.AddListener(showInfo);
         img = GetComponentInChildren<Image>();
-        RectTransform rectTrans = img.GetComponent<RectTransform>();
-        float oldY = rectTrans.sizeDelta.y;
-        rectTrans.sizeDelta = new Vector2(0,oldY);
-
+        img.enabled = false;
         txt = GetComponentInChildren<Text>();
-        rectTrans = txt.GetComponent<RectTransform>();
-        oldY = rectTrans.sizeDelta.y;
-        rectTrans.sizeDelta = new Vector2(0, oldY);
-
-        StartCoroutine(expandImg());
+        txt.enabled = false;
+        reset();
     }
 
 	void showInfo() {
@@ -44,6 +38,10 @@ public class Area : MonoBehaviour {
         btn.enabled = true;
     }
 
+    public void expand()
+    {
+        StartCoroutine(expandImg());
+    }
     IEnumerator expandImg()
     {
         // 展开图片
@@ -54,7 +52,7 @@ public class Area : MonoBehaviour {
         float t = 0;
         RectTransform rectTrans = img.GetComponent<RectTransform>();
         float oldY = rectTrans.sizeDelta.y;
-        while (t < 1)
+        while (t < 1 && AppManager.instance.inTrack)
         {
             t = (Time.time - startTime) / timeCost;
             rectTrans.sizeDelta = new Vector2(Mathf.Lerp(start, end, t), oldY);
@@ -69,13 +67,21 @@ public class Area : MonoBehaviour {
         t = 0;
         rectTrans = txt.GetComponent<RectTransform>();
         oldY = rectTrans.sizeDelta.y;
-        while (t < 1)
+        while (t < 1 && AppManager.instance.inTrack)
         {
             t = (Time.time - startTime) / timeCost;
             rectTrans.sizeDelta = new Vector2(Mathf.Lerp(start, end, t), oldY);
             yield return null;
         }
-
     }
 
+    public void reset()
+    {
+        RectTransform rectTrans = img.GetComponent<RectTransform>();
+        float oldY = rectTrans.sizeDelta.y;
+        rectTrans.sizeDelta = new Vector2(0, oldY);
+        rectTrans = txt.GetComponent<RectTransform>();
+        oldY = rectTrans.sizeDelta.y;
+        rectTrans.sizeDelta = new Vector2(0, oldY);
+    }
 }
