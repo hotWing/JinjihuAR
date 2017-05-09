@@ -7,13 +7,16 @@ using System;
 public class ImageSlideShow : MonoBehaviour, IDropHandler,IPointerExitHandler, IBeginDragHandler {
 
     // Use this for initialization
+    public Text pageText;
+    private int pageTotal;
     private ScrollRect scrollRect;
     private float interval;
     private float beginDragTime;
     private float beginDragScrollPos;
     void Start () {
         scrollRect = GetComponent<ScrollRect>();
-        interval = (float)1 / (transform.GetChild(0).GetChild(0).childCount -1);
+        pageTotal = transform.GetChild(0).GetChild(0).childCount;
+        interval = (float)1 / (pageTotal - 1);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -43,6 +46,7 @@ public class ImageSlideShow : MonoBehaviour, IDropHandler,IPointerExitHandler, I
             yield return null;
         }
 
+        pageText.text = (elemIndex + 1) + " / " + pageTotal;
         scrollRect.enabled = true;
 
     }

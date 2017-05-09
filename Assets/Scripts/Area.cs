@@ -36,6 +36,7 @@ public class Area : MonoBehaviour {
         particle.SetActive(false);
         areaInfo.SetActive(true);
         btn.enabled = true;
+        Vuforia.TrackerManager.Instance.GetTracker<Vuforia.ObjectTracker>().Stop();
     }
 
     public void expand()

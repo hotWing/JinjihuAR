@@ -76,4 +76,9 @@ public class AppManager : MonoBehaviour {
             dropMarkers();
         }
     }
+
+    public void startTracking()
+    {
+        Vuforia.TrackerManager.Instance.GetTracker<Vuforia.ObjectTracker>().Start();
+    }
 }
