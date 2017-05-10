@@ -17,6 +17,8 @@ public class ImageSlideShow : MonoBehaviour, IDropHandler,IPointerExitHandler, I
         scrollRect = GetComponent<ScrollRect>();
         pageTotal = transform.GetChild(0).GetChild(0).childCount;
         interval = (float)1 / (pageTotal - 1);
+
+        pageText.text = "1 / " + pageTotal;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -57,7 +59,7 @@ public class ImageSlideShow : MonoBehaviour, IDropHandler,IPointerExitHandler, I
         float dragDist = scrollRect.horizontalNormalizedPosition - beginDragScrollPos;
         float dragSpeed = dragDist / dragTime;
         int elemIndex = 0;
-        if (Math.Abs(dragSpeed) > 2 * interval)//快速拖动直接跳下一页
+        if (Math.Abs(dragSpeed) > 1.6 * interval)//快速拖动直接跳下一页
         {
             if(dragSpeed < 0)
                 elemIndex = Mathf.FloorToInt(scrollRect.horizontalNormalizedPosition / interval);
@@ -75,6 +77,10 @@ public class ImageSlideShow : MonoBehaviour, IDropHandler,IPointerExitHandler, I
     {
         beginDragTime = Time.time;
         beginDragScrollPos = scrollRect.horizontalNormalizedPosition;
+    }
 
+    public void OnDisable()
+    {
+        scrollRect.horizontalNormalizedPosition = 0;
     }
 }
